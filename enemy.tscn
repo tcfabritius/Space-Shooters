@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://dg5ovfue57kih"]
+
+[ext_resource type="Script" uid="uid://dcdbakg0u24on" path="res://Scripts/laavakivi.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://cs3h60bf65tx" path="res://Assets/PackMonsters/Monster4Pack.png" id="2_qi2p4"]
+[ext_resource type="AudioStream" uid="uid://cv484ncnhl7i1" path="res://dragon-studio-sci-fi-swipe-405451.mp3" id="3_qi2p4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8a3f"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvra1"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwq6m"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hga87"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khssy"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfqh4"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ajrn"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0sqdq"]
+atlas = ExtResource("2_qi2p4")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_noibl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8a3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvra1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwq6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hga87")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khssy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfqh4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ajrn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0sqdq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_14k6w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="Animation" id="Animation_aofd1"]
+resource_name = "fly"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ko4a"]
+_data = {
+&"RESET": SubResource("Animation_14k6w"),
+&"fly": SubResource("Animation_aofd1")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_76w4j"]
+
+[node name="Enemy" type="Area2D" unique_id=381298266]
+script = ExtResource("1_4gyqm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2010785320]
+sprite_frames = SubResource("SpriteFrames_noibl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1996988043]
+libraries/ = SubResource("AnimationLibrary_3ko4a")
+autoplay = &"fly"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=2014907758]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2059722657]
+shape = SubResource("CircleShape2D_76w4j")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=83288755]
+stream = ExtResource("3_qi2p4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
