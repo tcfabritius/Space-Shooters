@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cnhhii5ce8ba7"]
+
+[ext_resource type="Texture2D" uid="uid://dpfng37xq5j65" path="res://Assets/heart pixel art/heart pixel art 32x32.png" id="1_jjpbl"]
+[ext_resource type="Script" uid="uid://c3rui0mr16m45" path="res://Scripts/sydän.gd" id="2_2fo3i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2fo3i"]
+
+[node name="elämä" type="Area2D" unique_id=1695977234]
+script = ExtResource("2_2fo3i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=856122339]
+texture = ExtResource("1_jjpbl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1970683096]
+shape = SubResource("CircleShape2D_2fo3i")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

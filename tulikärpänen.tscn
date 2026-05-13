@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://itngh7vo4tjy"]
+
+[ext_resource type="Texture2D" uid="uid://dv684vk7lglrg" path="res://tulikärpänen.tres" id="1_hym0y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpcxn"]
+atlas = ExtResource("1_hym0y")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dmou"]
+atlas = ExtResource("1_hym0y")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gwvhx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpcxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dmou")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_hym0y"]
+offsets = PackedFloat32Array(0.31907895, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qpcxn"]
+gradient = SubResource("Gradient_hym0y")
+fill = 1
+fill_from = Vector2(0.51939654, 0.5021552)
+fill_to = Vector2(0.9762931, 0.17456897)
+
+[node name="Tulikärpänen" type="Node2D" unique_id=487181076]
+z_index = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=229878235]
+sprite_frames = SubResource("SpriteFrames_gwvhx")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1069150396]
+energy = 5.0
+texture = SubResource("GradientTexture2D_qpcxn")
+height = 5.0

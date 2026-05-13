@@ -6,14 +6,18 @@ extends CharacterBody2D
 @export var hidastuminen = 150.0	## hidastuminen sivusuunnassa
 @export var ilma_hidastuminen = 50	## hidastuminen sivusuunnassa (ilmassa))
 var ammusspawni_offset = 10
-var facing = 1
+var peli_ohi = false
 
 @export var luoti_skene: PackedScene
 
 
 var painovoima = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+func get_mouse_dir() -> Vector2:
+	return (get_global_mouse_position() - global_position).normalized()
+
 func _ready() -> void:
+	floor_max_angle = deg_to_rad(45)
 	$AnimationPlayer.play("Idle")
 	print($AnimationPlayer.current_animation)
 	Globals.pelaaja = self
@@ -47,16 +51,16 @@ func _input(event):
 			
 func ammu():
 	var luoti = luoti_skene.instantiate()
-	luoti.global_position = global_position + Vector2(ammusspawni_offset * facing, 0)
+	var dir = get_mouse_dir()
+	luoti.global_position = global_position + dir * ammusspawni_offset
 	get_parent().add_child(luoti)
 		
 func aseta_animaatio(suunta: float):
-	if suunta > 0:
+	var mouse_dir = get_mouse_dir()
+	if mouse_dir.x > 0:
 		$AnimatedSprite2D.flip_h = false
-		facing = 1
-	elif suunta < 0:
+	else:
 		$AnimatedSprite2D.flip_h = true
-		facing = -1
 		
 	if not is_on_floor():
 		if velocity.y < 0:
@@ -116,5 +120,46 @@ func aseta_animaatio(suunta: float):
 		#print($AnimationPlayer.assigned_animation)
 
 func _process(delta: float) -> void:
-	if Globals.elämät == 0:
-		get_tree().quit()
+	if Globals.elämät == 0 && not peli_ohi:
+		peli_ohi = true
+		peli_ohi_toiminnot()
+		
+func peli_ohi_toiminnot():
+	set_physics_process(false)
+	set_process_input(false)
+
+	var canvas = CanvasLayer.new()
+	get_tree().root.add_child(canvas)
+
+	# ISO TEKSTI
+	var label = Label.new()
+	label.text = "PISTEET: " + str(Globals.pisteet)
+	label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", 64)
+
+	canvas.add_child(label)
+
+	# PIENEMPI TEKSTI
+	var sub_label = Label.new()
+	sub_label.text = "Peli alkaa uudelleen 10 sekunnin kuluttua"
+
+	sub_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	sub_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	sub_label.add_theme_font_size_override("font_size", 24)
+
+	# siirretään vähän alemmas
+	sub_label.position.y += 80
+
+	canvas.add_child(sub_label)
+
+	# odotus
+	await get_tree().create_timer(10).timeout
+
+	canvas.queue_free()
+
+	Globals.elämät = 10
+	Globals.pisteet = 0
+	get_tree().reload_current_scene()

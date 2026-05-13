@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcdbakg0u24on" path="res://Scripts/laavakivi.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://cs3h60bf65tx" path="res://Assets/PackMonsters/Monster4Pack.png" id="2_qi2p4"]
-[ext_resource type="AudioStream" uid="uid://cv484ncnhl7i1" path="res://dragon-studio-sci-fi-swipe-405451.mp3" id="3_qi2p4"]
+[ext_resource type="AudioStream" uid="uid://cv484ncnhl7i1" path="res://Assets/Sounds/dragon-studio-sci-fi-swipe-405451.mp3" id="3_qi2p4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t8a3f"]
 atlas = ExtResource("2_qi2p4")

@@ -3,10 +3,18 @@ extends Node2D
 @export var enemy_skene: PackedScene
 @onready var nav_alue = get_tree().get_first_node_in_group("navigation")
 
+var spawnaus_väli := 5.0
+var mennyt_aika := 0.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	while true:
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(spawnaus_väli).timeout
+		mennyt_aika += spawnaus_väli
+		# Nopeutus
+		if mennyt_aika >= 20:
+			mennyt_aika = 0
+			spawnaus_väli = max(spawnaus_väli / 2, 0.2)
 		spawnaa()
 
 func spawnaa():
