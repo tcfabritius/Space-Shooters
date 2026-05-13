@@ -1123,7 +1123,7 @@ position = Vector2(93, 53)
 
 [node name="Parallax" type="Node2D" parent="." unique_id=455689733]
 z_index = -1
-position = Vector2(879, 189)
+position = Vector2(879, 150)
 
 [node name="Parallax2D" type="Parallax2D" parent="Parallax" unique_id=2060866049]
 scroll_scale = Vector2(0.1, 0.1)
@@ -1359,7 +1359,7 @@ position = Vector2(1166, 542)
 position = Vector2(398, 534)
 
 [node name="elämä6" parent="." unique_id=385542839 instance=ExtResource("14_xhm03")]
-position = Vector2(35, 542)
+position = Vector2(52, 501)
 
 [node name="elämä7" parent="." unique_id=1053390363 instance=ExtResource("14_xhm03")]
 position = Vector2(1311, 38)

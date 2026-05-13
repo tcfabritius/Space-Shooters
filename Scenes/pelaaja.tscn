@@ -520,3 +520,7 @@ position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_pvra1")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914095969]
+limit_left = -236
+limit_top = -380
+limit_right = 3236
+limit_bottom = 650
